@@ -31,7 +31,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*1000)
 	defer cancel()
 
-	localCache, err := cache.NewFSCache("/Users/batuhan.apaydin/Library/Caches/trivy")
+	localCache, err := cache.NewFSCache("")
 	if err != nil {
 		log.Logger.Fatalf("could not initialize f: %v", err)
 	}
@@ -49,11 +49,16 @@ func main() {
 		ListAllPackages:     true,
 	})
 
-	log.Logger.Infof("%d vulnerability/ies found", len(results[0].Vulnerabilities))
+	if len(results) > 0 {
+		log.Logger.Infof("%d vulnerability/ies found", len(results[0].Vulnerabilities))
 
-	if err = report.WriteResults(*outputTypeFlag, os.Stdout, []dbTypes.Severity{dbTypes.SeverityUnknown}, results, "", false); err != nil {
-		log.Logger.Fatalf("could not write results: %v", xerrors.Errorf("unable to write results: %w", err))
+		if err = report.WriteResults(*outputTypeFlag, os.Stdout, []dbTypes.Severity{dbTypes.SeverityUnknown}, results, "", false); err != nil {
+			log.Logger.Fatalf("could not write results: %v", xerrors.Errorf("unable to write results: %w", err))
+		}
+	} else {
+		log.Logger.Infof("no vulnerabilities found for image %s", *imageFlag)
 	}
+
 }
 
 func initializeDockerScanner(ctx context.Context, imageName string, artifactCache cache.ArtifactCache, customHeaders client.CustomHeaders, url client.RemoteURL, timeout time.Duration) (scanner.Scanner, func(), error) {
