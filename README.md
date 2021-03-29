@@ -57,7 +57,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*1000)
 	defer cancel()
 
-	localCache, err := cache.NewFSCache("/Users/batuhan.apaydin/Library/Caches/trivy")
+	localCache, err := cache.NewFSCache(os.Getenv("HOME") + "/Library/Caches/trivy")
 	if err != nil {
 		log.Logger.Fatalf("could not initialize f: %v", err)
 	}
@@ -74,6 +74,9 @@ func main() {
 		ScanRemovedPackages: true,
 		ListAllPackages:     true,
 	})
+	if err != nil {
+		log.Logger.Fatalf("could not scan image: %v", err)
+	}
 
 	log.Logger.Infof("%d vulnerability/ies found", len(results[0].Vulnerabilities))
 
