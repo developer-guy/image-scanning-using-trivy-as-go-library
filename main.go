@@ -48,6 +48,9 @@ func main() {
 		ScanRemovedPackages: true,
 		ListAllPackages:     true,
 	})
+	if err != nil {
+		log.Logger.Fatalf("could not scan image: %v", err)
+	}
 
 	if len(results) > 0 {
 		log.Logger.Infof("%d vulnerability/ies found", len(results[0].Vulnerabilities))
