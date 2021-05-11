@@ -75,7 +75,7 @@ func initializeDockerScanner(ctx context.Context, imageName string, artifactCach
 	if err != nil {
 		return scanner.Scanner{}, nil, err
 	}
-	artifact := image2.NewArtifact(imageImage, artifactCache)
+	artifact := image2.NewArtifact(imageImage, artifactCache, nil)
 	scanner2 := scanner.NewScanner(clientScanner, artifact)
 	return scanner2, func() {
 		cleanup()
