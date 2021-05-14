@@ -8,7 +8,7 @@ Trivy (tri pronounced like trigger, vy pronounced like envy) is a simple and com
 # Prerequisites
 
 * Go 1.15.7
-* Trivy 0.15.0
+* Trivy 0.17.2
 
 # Getting Started
 
