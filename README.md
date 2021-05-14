@@ -16,7 +16,7 @@ In this hands-on guide, we are going to develop a Trivy client with the Go code.
 
 In order to do that, we need to start Trivy server first using the following command:
 ```bash
-$ trivy server --cache-dir ./trivycache
+$ trivy --cache-dir ./trivycache server
 2021-02-07T14:13:52.210+0300    INFO    Need to update DB
 2021-02-07T14:13:52.211+0300    INFO    Downloading DB...
 2021-02-07T14:13:59.275+0300    INFO    Listening localhost:4954...
